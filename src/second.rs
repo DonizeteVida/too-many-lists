@@ -15,6 +15,14 @@ impl<T> LinkedList<T> {
             node.value
         })
     }
+
+    pub fn peek(&self) -> Option<&T> {
+        self.head.as_ref().map(|node| &node.value)
+    }
+
+    pub fn peek_mut(&mut self) -> Option<&mut T> {
+        self.head.as_mut().map(|node| &mut node.value)
+    }
 }
 
 #[derive(Debug)]
@@ -42,6 +50,26 @@ mod tests {
         assert_eq!(list.pop(), Some(3));
         assert_eq!(list.pop(), Some(2));
         assert_eq!(list.pop(), Some(1));
+        assert_eq!(list.pop(), None);
+    }
+
+    #[test]
+    fn can_add_and_peek() {
+        let mut list = LinkedList::<u32>::default();
+        list.push(1);
+        assert_eq!(list.peek(), Some(&1));
+        assert_eq!(list.pop(), Some(1));
+        assert_eq!(list.pop(), None);
+    }
+
+    #[test]
+    fn can_add_and_peek_mut() {
+        let mut list = LinkedList::<u32>::default();
+        list.push(2);
+        list.peek_mut().map(|node| {
+            *node *= 41;
+        });
+        assert_eq!(list.pop(), Some(82));
         assert_eq!(list.pop(), None);
     }
 }
