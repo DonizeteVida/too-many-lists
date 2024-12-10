@@ -1,4 +1,4 @@
-mod linked_list;
+mod first;
 
 fn main() {
     
